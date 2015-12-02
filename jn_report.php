@@ -125,15 +125,15 @@
 
             <!-- Compare 2 sets build report-->
             <div class="col-md-12">
-                <div class="col-md-6 text-right">
-                    <div class="checkbox checkbox-info">
-                        <input id="build_report" class="styled" type="checkbox">
-                        <label for="checkbox4">
-                            Compare the 2 sets
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-6 text-left">
+<!--                <div class="col-md-6 text-right">-->
+<!--                    <div class="checkbox checkbox-info">-->
+<!--                        <input id="build_report" class="styled" type="checkbox">-->
+<!--                        <label for="checkbox4">-->
+<!--                            Compare the 2 sets-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="col-md-12 text-center">
                     <button type="button" class="btn btn-success buildreport">Build Reports</button>
                 </div>
             </div>
@@ -191,15 +191,27 @@
 
 	        }
 
+            function hideChartAndTable()
+            {
+                $('#tbl_list').hide();
+                $('#tbl_list_right').hide();
+                $('#chart_right').hide();
+                $('#chart').hide();
+
+                $('#desktop_linechart').hide();// hide by default
+                $('#mobile_linechart').hide();// hide by default
+                $('#tablet_linechart').hide();// hide by default
+            }
+
             function pieChartTable()
             {
                 $('.search').on('click',function(){
-//	                var _url = "http://www.bocaexecutiverealty.com/useragent_report/process.php";
                     var _url = "./jn_process.php";
-//                    var equal_day = $('#equal_day').is(":checked");
                     var rightCtl = $('input[name=ctlRight]:checked').val()
                     var s_date = $('.s_date').val();
                     var e_date = $('.e_date').val();
+
+                    hideChartAndTable();
 
                     //Left side
                     $('#chart_loading').show();
@@ -228,6 +240,9 @@
                         var resultObj = jQuery.parseJSON (result);
                         $('#tbl_list').html(resultObj.list_left);
                         $('#tbl_list_right').html(resultObj.list_right);
+
+                        $('#tbl_list').show();
+                        $('#tbl_list_right').show();
                     });//end done
 
 
@@ -250,6 +265,8 @@
                         //convert json to string
 //                        console.log(JSON.stringify(result));
 
+                        $('#chart_right').show();
+                        $('#chart').show();
                         $('#chart').highcharts(result.left); //left chart
                         $('#chart_right').highcharts(result.right); //right chart
 
@@ -319,7 +336,7 @@
 	        	setDatePicker(); //fired event with datetime picker
                 pieChartTable(); //fired event on left side
                 rightSideToggle(); //fired event toggle with right side checkbok
-                compareSets(); //fire event compare two sets
+                //compareSets(); //fire event compare two sets
                 reportLinechart(); //fired event show bottom chart
                 $(".search").trigger('click'); //fired event when onload
 	        });

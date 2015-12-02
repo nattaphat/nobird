@@ -2,8 +2,7 @@
 ini_set('max_execution_time', 600); //5 minutes
 ini_set('memory_limit','512M');
 
-//require_once('/home/bocaexec/include/session.php');
-include('/home/bocaexec/include/session.php');
+include('../../include/session.php');
 require_once 'jn_Mobile_Detect_optimize.php';
 //require_once 'jn_cache.class.php';
 require_once 'jn_db.php';
@@ -98,6 +97,7 @@ if (strtotime($start_date) === strtotime($end_date))
             AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') = '$start_date'
         ORDER BY agent_datetime ASC
         ";
+
     }
 }
 else
@@ -118,6 +118,24 @@ else
         SELECT useragent,datetime
         FROM user_agent
         WHERE useragent != '' AND datetime BETWEEN '$start_date' AND '$end_date_rside' ";
+
+        $optimize_sql = "
+          select u.id ,
+                l.datetime as l_datetime,
+                r.datetime as r_datetime,
+                b.datetime as b_datetime
+          from user_agent as u,
+            (select * from user_agent where datetime between '$start_date' and '$end_date') as l,
+            (select * from user_agent where datetime between '$start_date_rside' and '$end_date_rside') as r,
+            (select * from user_agent where datetime between '$start_date' and '$end_date_rside') as b
+          where
+            u.useragent !='' AND
+            l.useragent !='' AND
+            b.useragent !='' AND
+            useragent REGEXP '$mobileDevices'
+
+        ";
+        echo $optimize_sql;exit;
     }else{ //dev env
         $sql_left = "
         SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
