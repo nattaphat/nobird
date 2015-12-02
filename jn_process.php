@@ -4,7 +4,7 @@ ini_set('memory_limit','512M');
 
 //require_once('/home/bocaexec/include/session.php');
 include('/home/bocaexec/include/session.php');
-require_once 'jn_Mobile_Detect.php';
+require_once 'jn_Mobile_Detect_optimize.php';
 //require_once 'jn_cache.class.php';
 require_once 'jn_db.php';
 require_once 'config/jn_mobile.php';
@@ -107,26 +107,17 @@ else
         $sql_left = "
         SELECT useragent,datetime
         FROM user_agent
-        WHERE useragent != ''
-            AND datetime >= '$start_date'
-            AND datetime <= '$end_date'
-        ";
+        WHERE useragent != '' AND datetime BETWEEN '$start_date' AND '$end_date' ";
 
         $sql_right = "
         SELECT useragent,datetime
         FROM user_agent
-        WHERE useragent != ''
-            AND datetime >= '$start_date_rside'
-            AND datetime <= '$end_date_rside'
-        ";
+        WHERE useragent != '' AND datetime BETWEEN '$start_date_rside' AND '$end_date_rside' ";
 
         $sql_linechart_right = "
         SELECT useragent,datetime
         FROM user_agent
-        WHERE useragent != ''
-            AND datetime >= '$start_date'
-            AND datetime <= '$end_date_rside'
-        ";
+        WHERE useragent != '' AND datetime BETWEEN '$start_date' AND '$end_date_rside' ";
     }else{ //dev env
         $sql_left = "
         SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
@@ -134,8 +125,7 @@ else
         WHERE users2.user_agent != ''
             AND users.user1 != ''
             AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') >= '$start_date'
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') <= '$end_date'
+            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') BETWEEN '$start_date' AND '$end_date'
         ORDER BY agent_datetime ASC
         ";
 
@@ -145,8 +135,7 @@ else
         WHERE users2.user_agent != ''
             AND users.user1 != ''
             AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') >= '$start_date_rside'
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') <= '$end_date_rside'
+            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') BETWEEN '$start_date_rside' AND '$end_date_rside'
         ORDER BY agent_datetime ASC
         ";
 
@@ -156,8 +145,7 @@ else
         WHERE users2.user_agent != ''
             AND users.user1 != ''
             AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') >= '$start_date'
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') <= '$end_date_rside'
+            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') BETWEEN '$start_date' AND '$end_date_rside'
         ORDER BY agent_datetime ASC
         ";
     }

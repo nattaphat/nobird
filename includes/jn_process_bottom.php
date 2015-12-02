@@ -43,4 +43,8 @@ while ($agentr = mysql_fetch_array($rs_query_buttom_right)) {
 }//end while
 /**End Right Side**/
 
+
+//print '<pre>';
+//print_r($rs_right_desktop);
+
 /*****************************************************End Bottom side*************************/

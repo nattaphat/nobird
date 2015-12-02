@@ -86,7 +86,6 @@ while ($agentr = mysql_fetch_array($rs_query_left)) {
     }
 }//end while
 
-
 $left_agent_total = array(
     'mobile'=>array('total'=>$left_num_mobile,'iOS'=>$left_num_mobile_iOS,'Android'=>$left_num_mobile_android,'win'=>$left_num_mobile_windows),
     'tablet'=>array('total'=>$left_num_tablet,'iOS'=>$left_num_tablet_iOS,'Android'=>$left_num_tablet_android,'win'=>$left_num_tablet_windows),
