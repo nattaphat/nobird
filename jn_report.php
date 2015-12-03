@@ -206,7 +206,7 @@
             function pieChartTable()
             {
                 $('.search').on('click',function(){
-                    var _url = "./jn_process.php";
+                    var _url = "./jn_report_process.php";
                     var rightCtl = $('input[name=ctlRight]:checked').val()
                     var s_date = $('.s_date').val();
                     var e_date = $('.e_date').val();
