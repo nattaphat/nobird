@@ -19,39 +19,41 @@ $left_num_mobile_windows = 0;
 
 $left_num_desktop = 0;
 
-while ($agentr = mysql_fetch_array($rs_query_left)) {
+while ($agentr = mysql_fetch_array($rs_query_left_mobile)) {
     $rs_useragent_left = $agentr[0]; //user agent
     $rs_useragent_left_datetime = $agentr[1];
 
     $detect->setUserAgent($rs_useragent_left);
 
-    if($detect->isMobile())
-    {
+    if ($detect->isMobile()) {
         $left_num_mobile = $left_num_mobile + 1;
 
         $mobile_left_date = getDeviceDate($rs_useragent_left_datetime); //get device date
         //datetime:result left side for process mobile bottom line chart.
         $rs_left_mobile[$mobile_left_date] = $rs_left_mobile[$mobile_left_date] + 1;
 
-        if( iOS($rs_useragent_left) )
-        {
+        if (iOS($rs_useragent_left)) {
             $left_num_mobile_iOS = $left_num_mobile_iOS + 1;
         }
 
-        if(andoidOS($rs_useragent_left))
-        {
-            $left_num_mobile_android = $left_num_mobile_android +1;
+        if (andoidOS($rs_useragent_left)) {
+            $left_num_mobile_android = $left_num_mobile_android + 1;
         }
 
-        if( windowOS($rs_useragent_left) )
-        {
+        if (windowOS($rs_useragent_left)) {
             $left_num_mobile_windows = $left_num_mobile_windows + 1;
         }
     }
 
+}//end while
+
+while ($agentr = mysql_fetch_array($rs_query_left_tablet)) {
+    $rs_useragent_left = $agentr[0]; //user agent
+    $rs_useragent_left_datetime = $agentr[1];
+
+    $detect->setUserAgent($rs_useragent_left);
     //tablet agent
-    if($detect->isTablet())
-    {
+    if ($detect->isTablet()) {
 
         $left_num_tablet = $left_num_tablet + 1;
 
@@ -59,22 +61,25 @@ while ($agentr = mysql_fetch_array($rs_query_left)) {
         //datetime:result left side for process tablet bottom line chart.
         $rs_left_tablet[$tablet_left_date] = $rs_left_tablet[$tablet_left_date] + 1;
 
-        if( iOS($rs_useragent_left))
-        {
+        if (iOS($rs_useragent_left)) {
             $left_num_tablet_iOS = $left_num_tablet_iOS + 1;
         }
 
-        if(andoidOS($rs_useragent_left))
-        {
-            $left_num_tablet_android = $left_num_tablet_android +1;
+        if (andoidOS($rs_useragent_left)) {
+            $left_num_tablet_android = $left_num_tablet_android + 1;
         }
 
-        if( windowOS($rs_useragent_left) )
-        {
+        if (windowOS($rs_useragent_left)) {
             $left_num_mobile_windows = $left_num_mobile_windows + 1;
         }
     }
+}//end while
 
+while ($agentr = mysql_fetch_array($rs_query_left_desktop)) {
+    $rs_useragent_left = $agentr[0]; //user agent
+    $rs_useragent_left_datetime = $agentr[1];
+
+    $detect->setUserAgent($rs_useragent_left);
     //desktop agent
     if ( !$detect->isTablet() && !$detect->isMobile())
     {

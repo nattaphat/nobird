@@ -30,6 +30,22 @@ $seriesOption_mobile_right[] = array(
     'data'=> $series_right_mobile
 );
 
+if($rightCtl == 'comp_year')
+{
+    $xaxix_format = array(
+        'day'=>'%d-%m-%Y',
+        'week'=>'%d-%m-%Y',
+        'month'=>'%m-%Y',
+        'year'=>'%Y'
+    );
+}
+else
+{
+    $xaxix_format = array(
+        'millisecond'=> '%b-%e'
+    );
+}
+
 $chart_bottom_mobile = array(
     'title'=>array(
         'text'=>'Mobile devices.',
@@ -44,12 +60,9 @@ $chart_bottom_mobile = array(
     ),
     'xAxis'=>array(
         'type'=>'datetime',
-        'dateTimeLabelFormats'=>array(
-            'day'=>'%d-%m-%Y',
-            'week'=>'%d-%m-%Y',
-            'month'=>'%m-%Y',
-            'year'=>'%Y'
-        )
+        'dateTimeLabelFormats'=>$xaxix_format//,
+//        'tickInterval'=> 24 * 3600 * 1000,
+//        'ordinal'=> false
     ),
     'yAxis'=>array(
         'title'=>array(

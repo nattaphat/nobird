@@ -10,29 +10,41 @@
 
 /**Right Side**/
 
-while ($agentr = mysql_fetch_array($rs_query_buttom_right)) {
+while ($agentr = mysql_fetch_array($rs_query_bottom_mobile)) {
 
     $rs_useragent_right = $agentr[0];//user agent
     $rs_useragent_right_datetime = $agentr[1];//get device date
 
     $detect->setUserAgent($rs_useragent_right);
 
-    if($detect->isMobile())
-    {
+    if ($detect->isMobile()) {
         $mobile_right_date = getDeviceDate($rs_useragent_right_datetime);
 
         //datetime:result right side for process mobile bottom line chart.
         $rs_right_mobile[$mobile_right_date] = $rs_right_mobile[$mobile_right_date] + 1;
     }
+}
 
+while ($agentr = mysql_fetch_array($rs_query_bottom_tablet)) {
+
+    $rs_useragent_right = $agentr[0];//user agent
+    $rs_useragent_right_datetime = $agentr[1];//get device date
+
+    $detect->setUserAgent($rs_useragent_right);
     //tablet agent
-    if($detect->isTablet())
-    {
+    if ($detect->isTablet()) {
         $tablet_right_date = getDeviceDate($rs_useragent_right_datetime); //get device date
         //datetime:result right side for process tablet bottom line chart.
         $rs_right_tablet[$tablet_right_date] = $rs_right_tablet[$tablet_right_date] + 1;
     }
+}
 
+while ($agentr = mysql_fetch_array($rs_query_bottom_desktop)) {
+
+    $rs_useragent_right = $agentr[0];//user agent
+    $rs_useragent_right_datetime = $agentr[1];//get device date
+
+    $detect->setUserAgent($rs_useragent_right);
     //desktop agent
     if ( !$detect->isTablet() && !$detect->isMobile())
     {
