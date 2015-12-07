@@ -51,36 +51,7 @@ if (strtotime($start_date) === strtotime($end_date))
 
     }
     else{
-        $sql_left = "
-        SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
-        FROM users2, users
-        WHERE users2.user_agent != ''
-            AND users.user1 != ''
-            AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') = '$start_date'
-        ORDER BY agent_datetime ASC
-        ";
-
-        $sql_right = "
-        SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
-        FROM users2, users
-        WHERE users2.user_agent != ''
-            AND users.user1 != ''
-            AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') = '$start_date'
-        ORDER BY agent_datetime ASC
-        ";
-
-        $sql_linechart_right = "
-        SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
-        FROM users2, users
-        WHERE users2.user_agent != ''
-            AND users.user1 != ''
-            AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') = '$start_date'
-        ORDER BY agent_datetime ASC
-        ";
-
+        require_once "queries/jn_report_query_sameday_prod.php";
     }
 }
 else
