@@ -22,7 +22,6 @@ list($e_year, $e_month, $e_day) = explode("-",$end_date);
 $interval = $datetime1->diff($datetime2);
 $diff_day = $interval->format('%a') +1;
 
-$flag = $_POST['flag'];
 
 $rightCtl = $_POST['rightCtl']; //status of compare year
 
@@ -39,7 +38,7 @@ if( $rightCtl == 'comp_year' )//compare year is true
     $end_date_rside = date("Y-m-d", mktime(0, 0, 0, $e_month, $e_day + $diff_day, $e_year ));; //end date for right side
 }
 
-$debug = false;
+$debug = true;
 $cache_name = 'useraget_report_'.$start_date.'_'.$end_date;
 
 
@@ -126,37 +125,36 @@ require_once "includes/jn_process_left.php";
 require_once "includes/jn_process_right.php";
 require_once "includes/jn_process_bottom.php";
 
-if($flag == 'list'){
+/**Chart**/
+/**Chart on Left side**/
+require_once "includes/jn_chart_leftside.php";
 
-    /**Table on Left side**/
-    require_once "includes/jn_table_leftside.php";
+/**Chart on Right side**/
+require_once "includes/jn_chart_rightside.php";
 
-    /**Table on Right side**/
-    require_once "includes/jn_table_rightside.php";
+/**Chart on Bottom side - Desktop **/
+require_once "includes/jn_chart_bottom_desktop.php";
 
-    echo json_encode( $results );
+/**Chart on Bottom side - Desktop **/
+require_once "includes/jn_chart_bottom_mobile.php";
 
-}
-else//for chart
-{
-    /**Chart on Left side**/
-    require_once "includes/jn_chart_leftside.php";
+/**Chart on Bottom side - Desktop **/
+require_once "includes/jn_chart_bottom_tablet.php";
 
+/**Table**/
+/**Table on Left side**/
+require_once "includes/jn_table_leftside.php";
 
-    /**Chart on Right side**/
-    require_once "includes/jn_chart_rightside.php";
+/**Table on Right side**/
+require_once "includes/jn_table_rightside.php";
 
-    /**Chart on Bottom side - Desktop **/
-    require_once "includes/jn_chart_bottom_desktop.php";
+$ajax_result['table'] = $results;
+$ajax_result['chart'] = $charts;
+echo json_encode( $ajax_result );
 
-    /**Chart on Bottom side - Desktop **/
-    require_once "includes/jn_chart_bottom_mobile.php";
+//    echo json_encode( $results );
+//	echo json_encode($charts);
 
-    /**Chart on Bottom side - Desktop **/
-    require_once "includes/jn_chart_bottom_tablet.php";
-
-	echo json_encode($charts);
-}
 
 mysql_close($con);
 ?>
