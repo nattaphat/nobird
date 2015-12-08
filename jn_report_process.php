@@ -39,7 +39,7 @@ if( $rightCtl == 'comp_year' )//compare year is true
     $end_date_rside = date("Y-m-d", mktime(0, 0, 0, $e_month, $e_day + $diff_day, $e_year ));; //end date for right side
 }
 
-$debug = true;
+$debug = false;
 $cache_name = 'useraget_report_'.$start_date.'_'.$end_date;
 
 
@@ -51,36 +51,7 @@ if (strtotime($start_date) === strtotime($end_date))
 
     }
     else{
-        $sql_left = "
-        SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
-        FROM users2, users
-        WHERE users2.user_agent != ''
-            AND users.user1 != ''
-            AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') = '$start_date'
-        ORDER BY agent_datetime ASC
-        ";
-
-        $sql_right = "
-        SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
-        FROM users2, users
-        WHERE users2.user_agent != ''
-            AND users.user1 != ''
-            AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') = '$start_date'
-        ORDER BY agent_datetime ASC
-        ";
-
-        $sql_linechart_right = "
-        SELECT users2.user_agent,FROM_UNIXTIME(users.user1,'%Y-%m-%d %h:%i:%s') as agent_datetime
-        FROM users2, users
-        WHERE users2.user_agent != ''
-            AND users.user1 != ''
-            AND users2.userid = users.username
-            AND FROM_UNIXTIME(users.user1,'%Y-%m-%d') = '$start_date'
-        ORDER BY agent_datetime ASC
-        ";
-
+        require_once "queries/jn_report_query_sameday_prod.php";
     }
 }
 else
