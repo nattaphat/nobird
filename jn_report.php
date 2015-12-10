@@ -221,33 +221,7 @@
                     $('#chart_loading_right').show();
                     $('#tbl_loading_right').show();
 
-                    //Main render table left and right
-                    $.ajax({
-                        type: "POST",
-                        url:_url,
-                        dataType: 'html',
-                        data:{
-                            'sdate': s_date,
-                            'edate': e_date,
-                            'rightCtl' : rightCtl,
-                            'flag' : 'list'
-                        },
-                    }).done(function(result) {
-                        $('#tbl_loading').hide();
-                        $('#tbl_loading_right').hide();
-
-                        //convert to object
-                        var resultObj = jQuery.parseJSON (result);
-                        $('#tbl_list').html(resultObj.list_left);
-                        $('#tbl_list_right').html(resultObj.list_right);
-
-                        $('#tbl_list').show();
-                        $('#tbl_list_right').show();
-                    });//end done
-
-
-
-                    //Main render chart left, right and bottom
+                    //Main function for render table, chart left, right and bottom
                     $.ajax({
                         type: "POST",
                         url:_url,
@@ -255,8 +229,7 @@
                         data:{
                             'sdate': s_date,
                             'edate': e_date,
-                            'rightCtl' : rightCtl,
-                            'flag' : 'chart'
+                            'rightCtl' : rightCtl
                         },
 
                     }).done(function(result) {
@@ -265,22 +238,33 @@
                         //convert json to string
 //                        console.log(JSON.stringify(result));
 
+                        //Table
+                        $('#tbl_loading').hide();
+                        $('#tbl_loading_right').hide();
+                        $('#tbl_list').html(result.table.list_left);
+                        $('#tbl_list_right').html(result.table.list_right);
+
+                        $('#tbl_list').show();
+                        $('#tbl_list_right').show();
+
+                        //Chart
                         $('#chart_right').show();
                         $('#chart').show();
-                        $('#chart').highcharts(result.left); //left chart
-                        $('#chart_right').highcharts(result.right); //right chart
+                        $('#chart').highcharts(result.chart.left); //left chart
+                        $('#chart_right').highcharts(result.chart.right); //right chart
 
-                        var desktop = $('#desktop_linechart').highcharts(result.bottom_desktop); //bottom desktop chart
+                        var desktop = $('#desktop_linechart').highcharts(result.chart.bottom_desktop); //bottom desktop chart
 //                        desktop.redraw();
                         $('#desktop_linechart').hide();// hide by default
 
-                        var mobile = $('#mobile_linechart').highcharts(result.bottom_mobile); //bottom mobile chart
+                        var mobile = $('#mobile_linechart').highcharts(result.chart.bottom_mobile); //bottom mobile chart
 //                        mobile.redraw();
                         $('#mobile_linechart').hide();// hide by default
 
-                        var tablet = $('#tablet_linechart').highcharts(result.bottom_tablet); //bottom tablet chart
+                        var tablet = $('#tablet_linechart').highcharts(result.chart.bottom_tablet); //bottom tablet chart
 //                        tablet.redraw();
                         $('#tablet_linechart').hide();// hide by default
+
                     });//end done
                 });
             }
